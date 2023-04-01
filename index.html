@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Fitness Walking Tracks</title>
+
+        <link rel="stylesheet" href="style.css"> 
+        <script src="app.js"></script>
+    </head>
+
+    <body>
+
+        
+        <div class="demo-wrap"> 
+            <img
+              class="demo-bg"
+              src="banner.jpeg"
+            >
+
+            <div class="demo-content">
+            
+            <!--two button-->
+                <div id="changeLang">
+                    <input type="button" onclick="showEnglish()" value="English" class="btn">
+                    <input type="button" onclick="showChinese()" value="繁體中文" class="btn">
+                    <input type="button" id="order" onclick="showengorder()" value="show from a to z" class="btn"> 
+                </div>
+
+            <!--search-->
+                <div id="seachBar">
+                    <div class="container"></div>
+                    <input type="text" class="input" id="engInput" onkeyup="searchEngTable()" placeholder="Search for Title.." title="Type in a title">
+                    <input type="text" class="input" id="chiInput" onkeyup="searchChiTable()" placeholder="搜索路徑.." title="Type in a title">
+                    </div>
+                </div>
+
+
+            <!--title-->
+                <p id="toptitle">Fitness Walking Tracks</p>
+           
+            </div>
+        </div>
+
+        <div id="background">
+
+        <div id="engVer">
+            <button onclick='document.getElementById("tb1").classList.toggle("show1And4")'>only show Title and HowToAccess</button>
+
+            <table id = "tb1" border = "1">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>District</th>
+                        <th>Route</th>
+                        <th>HowToAccess</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        
+
+        <div id="chiVer">
+            <table id = "tb2" border = "1">
+                <thead>
+                    <tr>
+                        <th>路徑</th>
+                        <th>分區</th>
+                        <th>路徑資料</th>
+                        <th>前往途徑</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div id="engVer1">
+
+            <table id = "tb3" border = "1">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>District</th>
+                        <th>Route</th>
+                        <th>HowToAccess</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        </div>
+
+
+        <script>
+            document.getElementById("chiVer").style.display = "none";
+            document.getElementById("chiInput").style.display = "none";
+            document.getElementById("engVer1").style.display = "none";
+
+
+            fetch("mydata.json")
+                .then(response => response.json())
+                .then(data => {
+                    for (var i = 0; i<data.items.length; i++){
+                        let vTitle_en = data.items[i].Title_en;
+                        let vDistrict_en = data.items[i].District_en;
+                        let vRoute_en = data.items[i].Route_en;
+                        let vHowToAccess_en = data.items[i].HowToAccess_en;
+                        let vMapURL_en = data.items[i].MapURL_en;
+                        let vLatitude = data.items[i].Latitude;
+                        let vLongitude = data.items[i].Longitude;
+                            document.querySelector("#tb1").innerHTML += `
+                                <tbody>
+                                    <tr>
+                                        <td>${vTitle_en}</td>
+                                        <td>${vDistrict_en}</td>
+                                        <td>${vRoute_en}</td>
+                                        <td>${vHowToAccess_en}</td>
+                                    </tr>
+                                <tbody>`;
+                    }
+                })
+
+                fetch("mydata.json")
+                .then(response => response.json())
+                .then(data => {
+                    for (var i = 0; i<data.items.length; i++){
+                        let vTitle_tc = data.items[i].Title_tc;
+                        let vDistrict_tc = data.items[i].District_tc;
+                        let vRoute_tc = data.items[i].Route_tc;
+                        let vHowToAccess_tc = data.items[i].HowToAccess_tc;
+                        let vMapURL_tc = data.items[i].MapURL_tc;
+                        let vLatitude = data.items[i].Latitude;
+                        let vLongitude = data.items[i].Longitude;
+                            document.querySelector("#tb2").innerHTML += `
+                                <tbody>
+                                    <tr>
+                                        <td>${vTitle_tc}</td>
+                                        <td>${vDistrict_tc}</td>
+                                        <td>${vRoute_tc}</td>
+                                        <td>${vHowToAccess_tc}</td>
+                                    </tr>
+                                <tbody>`;
+                    }
+                })
+
+    fetch("mydata.json")
+    .then(response => response.json())
+    .then(data => {
+        var list = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+        for  (var x = 0; x < 25; x++){   
+            var index = list[x]
+            for (var i = 0; i<data.items.length; i++){
+                let vTitle_en = data.items[i].Title_en;
+                let vDistrict_en = data.items[i].District_en;
+                let vRoute_en = data.items[i].Route_en;
+                let vHowToAccess_en = data.items[i].HowToAccess_en;
+                let vMapURL_en = data.items[i].MapURL_en;
+                let vLatitude = data.items[i].Latitude;
+                let vLongitude = data.items[i].Longitude;
+                var a =  vTitle_en.charAt(0)
+                if (index= a){
+                    document.querySelector("#tb3").innerHTML += `
+                        <tbody>
+                            <tr>
+                                <td>${vTitle_en}</td>
+                                <td>${vDistrict_en}</td>
+                                <td>${vRoute_en}</td>
+                                <td>${vHowToAccess_en}</td>
+                                <td>${vLatitude}</td>
+                                <td>${vLongitude}</td>
+                            </tr>
+                        <tbody>`;
+                        }
+            
+                
+                        
+                        
+                        
+                        }
+    }    })
+
+
+        </script>
+    </body>
+
+</html>
